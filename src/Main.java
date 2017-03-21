@@ -11,7 +11,7 @@ public class Main extends JPanel {
 
     public Main(){
 
-        System.out.println("evan!");
+        System.out.println("whats up evan?");
 
         theWorld = new World(FRAMEWIDTH, FRAMEHEIGHT);
 
