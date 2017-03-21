@@ -11,6 +11,8 @@ public class Main extends JPanel {
 
     public Main(){
 
+        System.out.println("evan!");
+
         theWorld = new World(FRAMEWIDTH, FRAMEHEIGHT);
 
         //These are the Sprites that are added to the World...
