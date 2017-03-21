@@ -10,6 +10,7 @@ public class Main extends JPanel {
     private World theWorld;
 
     public Main(){
+        System.out.println("this is a test!!!!!!!");
 
         System.out.println("whats up evan?");
 
