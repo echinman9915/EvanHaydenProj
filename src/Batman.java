@@ -3,7 +3,8 @@
  */
 public class Batman extends Sprite{
 
-    public Batman(){
+    public Batman(world){
+        super(400,400,NORTH,world);
 
     }
 

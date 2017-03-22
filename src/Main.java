@@ -1,55 +1,50 @@
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
+import java.util.ArrayList;
 
 public class Main extends JPanel {
 
+    //instance fields for the general environment
     public static final int FRAMEWIDTH = 1000, FRAMEHEIGHT = 600;
-
     private Timer timer;
-    private World theWorld;
+    private boolean[] keys;
+
+    //instance fields for frogger.
+    private Sprite batman;
+    private ArrayList<Sprite> obstacles;
 
     public Main(){
-        System.out.println("this is a test!!!!!!!");
 
-        System.out.println("tester");
-        System.out.println("3rtwefv");
+        keys = new boolean[512]; //should be enough to hold any key code.
+        //initialize the instance fields.
 
-
-
-        theWorld = new World(FRAMEWIDTH, FRAMEHEIGHT);
-
-        //These are the Sprites that are added to the World...
-        for (int i = 0; i < 1; i++) {
-            int rand = (int)(Math.random()*3);
-            int x = (int)(Math.random()*400 + 50);
-            int y = (int)(Math.random()*400 + 50);
-           // theWorld.addSprite(new TriTracer(x, y, theWorld));
-//            if(rand == 0)
-//                theWorld.addSprite(new Bug(x, y, theWorld));
-//            else if(rand == 1)
-//                theWorld.addSprite(new BoxSprite(x, y, (int)(Math.random()*40+15), theWorld));
-//            else if(rand == 2 && theWorld.getAllSprites().size() > 1)
-//                theWorld.addSprite(new BoxSprite(x, y, 30, theWorld));
-//            else
-//                theWorld.addSprite(new Sprite(x, y, Sprite.EAST, theWorld));
-        }
-//        theWorld.addSprite(new Chaser(10, 10, theWorld));
+        batman = new Batman();
+        //init arraylist
+        //add obstacles - cars and stuff
 
 
         timer = new Timer(40, new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent actionEvent) {
 
-                //This will call update on each sprite.
-                theWorld.updateSprites();
+                //move the frog
+                if(keys[KeyEvent.VK_W]){
+                    batman.setDir(Sprite.NORTH);
+                    batman.update();
+                    keys[KeyEvent.VK_W] = false; //probably.
+                }
+
+                //update each obstacle
+
+                //check for collisions
+
+
                 repaint();
             }
         });
         timer.start();
 
-
-        //EventListeners.  Not using them at the moment.
         addKeyListener(new KeyListener() {
             @Override
             public void keyTyped(KeyEvent keyEvent) {
@@ -58,45 +53,14 @@ public class Main extends JPanel {
 
             @Override
             public void keyPressed(KeyEvent keyEvent) {
-
+                keys[keyEvent.getKeyCode()] = true;
             }
 
             @Override
             public void keyReleased(KeyEvent keyEvent) {
-
+                keys[keyEvent.getKeyCode()] = false;
             }
         });
-
-        addMouseListener(new MouseListener() {
-            @Override
-            public void mouseClicked(MouseEvent mouseEvent) {
-
-            }
-
-            @Override
-            public void mousePressed(MouseEvent mouseEvent) {
-                //Ask the world if any sprites contain the click
-                theWorld.click(mouseEvent);
-
-                repaint();
-            }
-
-            @Override
-            public void mouseReleased(MouseEvent mouseEvent) {
-
-            }
-
-            @Override
-            public void mouseEntered(MouseEvent mouseEvent) {
-
-            }
-
-            @Override
-            public void mouseExited(MouseEvent mouseEvent) {
-
-            }
-        });
-
 
     }
 
@@ -105,23 +69,26 @@ public class Main extends JPanel {
         super.paintComponent(g);
         Graphics2D g2 = (Graphics2D)g;
 
-        //Draws all the sprites.
-        theWorld.drawSprites(g2);
+        batman.draw(g2);
+
+        //draw all the things.
+//        for(Sprite s: obstacles){
+//            s.draw(g2);
+//        }
 
     }
 
     //sets ups the panel and frame.
     public static void main(String[] args) {
-        JFrame window = new JFrame("SpriteLand");
+        JFrame window = new JFrame("Frogger!");
         window.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        window.setBounds(0, 0, FRAMEWIDTH, FRAMEHEIGHT + 22); //(x, y, w, h) 20 due to title bar.
+        window.setBounds(0, 0, FRAMEWIDTH, FRAMEHEIGHT + 22); //(x, y, w, h) 22 due to title bar.
 
         Main panel = new Main();
         panel.setSize(FRAMEWIDTH, FRAMEHEIGHT);
 
         panel.setFocusable(true);
         panel.grabFocus();
-
 
         window.add(panel);
         window.setVisible(true);
