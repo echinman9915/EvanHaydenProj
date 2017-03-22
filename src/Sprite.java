@@ -3,14 +3,9 @@ import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.File;
 
-/*
-Version 1.1
-    Added a unique ID to each Sprite, for removal of sprites. (WORKS)
-
-A Sprite is a 2D entity on the screen.  It lives in myWorld.
-It has a location, a direction it is facing, and an image file.
+/**
+ * Created by michael_hopps on 2/13/17.
  */
-
 public class Sprite {
 
     private static int nextID = 1;
@@ -18,39 +13,15 @@ public class Sprite {
     private Point loc; //top left corner of this Sprite. Note loc.x and loc.y are the easy way to access the point.
     private int dir, picOrientation; //dir is the current direction in degrees.  See the constants below.
     private BufferedImage pic; //put the file in the res folder.
-    private World myWorld; //the world this sprite exists in!
     private int speed; //Number of pixels moved each frame.
     private int id;
     public static final int NORTH = 90, SOUTH = 270, WEST = 180, EAST = 0, NE = 45, NW = 135, SW = 225, SE = 315;
 
-    //Constructors.
-    public Sprite(World world) {
-        loc = new Point(0, 0);
-        dir = EAST;
-        setPic("blank.png", NORTH);
-        myWorld = world;
-        speed = 5;
 
-        id = nextID;
-        nextID++;
-    }
-
-    public Sprite(int x, int y, int direction, World world) {
+    public Sprite(int x, int y, int direction) {
         loc = new Point(x, y);
         dir = direction;
         setPic("blank.png", NORTH);
-        myWorld = world;
-        speed = 5;
-
-        id = nextID;
-        nextID++;
-    }
-
-    public Sprite(Point location, int direction, World world) {
-        loc = location;
-        dir = direction;
-        setPic("blank.png", NORTH);
-        myWorld = world;
         speed = 5;
 
         id = nextID;
@@ -157,21 +128,6 @@ public class Sprite {
         this.pic = pic;
     }
 
-
-    /**
-     *Returns the world in which this sprite lives.
-     */
-    public World getWorld() {
-        return myWorld;
-    }
-
-    /**
-     *Changes the world in which this sprite lives.
-     */
-    public void setMyWorld(World myWorld) {
-        this.myWorld = myWorld;
-    }
-
     /**
      * Returns true if this Sprite is facing East, not true EAST, but EAST at all.
      *
@@ -257,3 +213,4 @@ public class Sprite {
         return speed;
     }
 }
+
