@@ -4,8 +4,8 @@
 public class Batman extends Sprite{
 
     public Batman(){
-        super(400,400,NORTH);
-        setPic("batman ak.png", NORTH);
+        super(400,400,EAST);
+        setPic("batman ak.png", EAST);
         setSpeed(this.getBoundingRectangle().height);
 
 

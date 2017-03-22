@@ -28,11 +28,25 @@ public class Main extends JPanel {
             @Override
             public void actionPerformed(ActionEvent actionEvent) {
 
-                //move the frog
-                if(keys[KeyEvent.VK_W]){
+                if (keys[KeyEvent.VK_W]) {
                     batman.setDir(Sprite.NORTH);
                     batman.update();
                     keys[KeyEvent.VK_W] = false; //probably.
+                }
+                if (keys[KeyEvent.VK_A]) {
+                    batman.setDir(Sprite.WEST);
+                    batman.update();
+                    keys[KeyEvent.VK_A] = false; //probably.
+                }
+                if (keys[KeyEvent.VK_D]) {
+                    batman.setDir(Sprite.EAST);
+                    batman.update();
+                    keys[KeyEvent.VK_D] = false; //probably.
+                }
+                if (keys[KeyEvent.VK_S]) {
+                    batman.setDir(Sprite.SOUTH);
+                    batman.update();
+                    keys[KeyEvent.VK_S] = false; //probably.
                 }
 
                 //update each obstacle
