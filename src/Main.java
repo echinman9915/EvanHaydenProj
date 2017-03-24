@@ -9,13 +9,12 @@ public class Main extends JPanel {
     public static final int FRAMEWIDTH = 1400, FRAMEHEIGHT = 800;
     private Timer timer;
     private boolean[] keys;
-
+    private Sprite bullets;
 
 
     //instance fields for sprites which are located on screen.
     private Sprite batman = new Batman();
     private ArrayList<Sprite> obstacles;
-    private ArrayList<Sprite> bullets;
     private Zombie zomb;
 
 
@@ -62,26 +61,15 @@ public class Main extends JPanel {
                    // bullets.add(b);
                     keys[KeyEvent.VK_S] = false; //probably.
                 }
-                int lives = 3;
-                for (Sprite b: bullets) {
-                    for (int i = 0; i < zombies.size() ; i++) {
 
-                    Zombie zomb = zombies.get(i);
-                    if (b.intersects(zomb)&& lives!=0){
-                        lives--;
-                    }
-                    if (lives==0){
-                        zombies.remove(i);
-                    }
+                for (b:bullets); {
+
 
                 }
                 //for each bullet in bullets, update.
                 //update each obstacle
 
                 //check for collisions
-
-
-
 //                if bullet hits zombie add 1 damamage out of 3
 //                if damage equals 3 zomble dies
 //                if bullet hits barrel, barrel blows up and gives 3x damage in a circle with a radius with 10.
