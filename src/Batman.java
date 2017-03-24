@@ -15,6 +15,7 @@ public class Batman extends Sprite{
     public void update() {
         super.update();
 
+
 //        try {
 //            // open the sound file as a Java input stream
 //            String hop = "res/hop.wav";

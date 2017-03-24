@@ -9,6 +9,7 @@ public class Main extends JPanel {
     public static final int FRAMEWIDTH = 1400, FRAMEHEIGHT = 800;
     private Timer timer;
     private boolean[] keys;
+    private Sprite bullets;
 
 
     //instance fields for sprites which are located on screen.
@@ -54,10 +55,24 @@ public class Main extends JPanel {
                     batman.update();
                     keys[KeyEvent.VK_S] = false; //probably.
                 }
+                if (keys[KeyEvent.VK_SPACE]) {
 
+                    Bullet b = new Bullet(batman.getLoc().x, batman.getLoc().y, batman.getDir());
+                   // bullets.add(b);
+                    keys[KeyEvent.VK_S] = false; //probably.
+                }
+
+                for (b:bullets); {
+
+
+                }
+                //for each bullet in bullets, update.
                 //update each obstacle
 
                 //check for collisions
+//                if bullet hits zombie add 1 damamage out of 3
+//                if damage equals 3 zomble dies
+//                if bullet hits barrel, barrel blows up and gives 3x damage in a circle with a radius with 10.
 
 
                 repaint();
