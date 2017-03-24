@@ -6,20 +6,26 @@ import java.util.ArrayList;
 public class Main extends JPanel {
 
     //instance fields for the general environment
-    public static final int FRAMEWIDTH = 1000, FRAMEHEIGHT = 600;
+    public static final int FRAMEWIDTH = 1400, FRAMEHEIGHT = 800;
     private Timer timer;
     private boolean[] keys;
 
-    //instance fields for frogger.
-    private Sprite batman;
-    private ArrayList<Sprite> obstacles;
 
-    public Main(){
+    //instance fields for sprites which are located on screen.
+    private Sprite batman = new Batman();
+    private ArrayList<Sprite> obstacles;
+    private Zombie zomb;
+
+
+    public Main() {
 
         keys = new boolean[512]; //should be enough to hold any key code.
         //initialize the instance fields.
 
         batman = new Batman();
+        zomb = new Zombie(200, 200, batman);
+
+
         //init arraylist
         //add obstacles - cars and stuff
 
@@ -55,6 +61,7 @@ public class Main extends JPanel {
 
 
                 repaint();
+                zomb.update();
             }
         });
         timer.start();
@@ -79,14 +86,16 @@ public class Main extends JPanel {
     }
 
     //Our paint method.
-    public void paintComponent(Graphics g){
+    public void paintComponent(Graphics g) {
         super.paintComponent(g);
-        Graphics2D g2 = (Graphics2D)g;
+        Graphics2D g2 = (Graphics2D) g;
 
         batman.draw(g2);
+        zomb.draw(g2);
+
 
         //draw all the things.
-//        for(Sprite s: obstacles){
+//        for (Sprite s : obstacles) {
 //            s.draw(g2);
 //        }
 

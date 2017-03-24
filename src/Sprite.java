@@ -2,6 +2,7 @@ import javax.imageio.ImageIO;
 import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.File;
+import java.util.ArrayList;
 
 /**
  * Created by michael_hopps on 2/13/17.
@@ -16,6 +17,8 @@ public class Sprite {
     private int speed; //Number of pixels moved each frame.
     private int id;
     public static final int NORTH = 90, SOUTH = 270, WEST = 180, EAST = 0, NE = 45, NW = 135, SW = 225, SE = 315;
+
+    private ArrayList<Sprite> sprites;
 
 
     public Sprite(int x, int y, int direction) {
@@ -50,6 +53,14 @@ public class Sprite {
         int dx = (int) (Math.cos(Math.toRadians(dir)) * speed);
         int dy = -(int) (Math.sin(Math.toRadians(dir)) * speed);
         loc.translate(dx, dy);
+    }
+    public int getDirection(Point from, Point to){
+        double dx = to.x - from.x;
+        double dy = from.y - to.y;
+        int deg =  (int)Math.toDegrees(Math.atan(dy/dx));
+        if(to.x < from.x)
+            deg += 180;
+        return deg;
     }
 
     /**
@@ -212,5 +223,10 @@ public class Sprite {
     public int getSpeed() {
         return speed;
     }
+
+    public ArrayList<Sprite> getAllSprites(){
+        return sprites;
+    }
 }
+
 
