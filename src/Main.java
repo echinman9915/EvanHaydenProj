@@ -12,10 +12,11 @@ public class Main extends JPanel {
     private Sprite bullets;
 
 
+
     //instance fields for sprites which are located on screen.
     private Sprite batman = new Batman();
     private ArrayList<Sprite> obstacles;
-    private Zombie zomb;
+    private ArrayList <Zombie> deadpeople;
 
 
     public Main() {
@@ -24,10 +25,15 @@ public class Main extends JPanel {
         //initialize the instance fields.
 
         batman = new Batman();
-        zomb = new Zombie(200, 200, batman);
+        deadpeople = new ArrayList<Zombie>();
+
+        for (int i = 0; i<10; i++){
+            deadpeople.add(new Zombie(100*i, 100*1, batman));
+        }
 
 
-        //init arraylist
+
+        //init arraylist ;)
         //add obstacles - cars and stuff
 
 
@@ -55,17 +61,17 @@ public class Main extends JPanel {
                     batman.update();
                     keys[KeyEvent.VK_S] = false; //probably.
                 }
-                if (keys[KeyEvent.VK_SPACE]) {
-
-                    Bullet b = new Bullet(batman.getLoc().x, batman.getLoc().y, batman.getDir());
-                   // bullets.add(b);
-                    keys[KeyEvent.VK_S] = false; //probably.
-                }
-
-                for (b:bullets); {
-
-
-                }
+//                if (keys[KeyEvent.VK_SPACE]) {
+//
+//                    Bullet b = new Bullet(batman.getLoc().x, batman.getLoc().y, batman.getDir());
+//                   // bullets.add(b);
+//                    keys[KeyEvent.VK_S] = false; //probably.
+//                }
+//
+//                for (b:bullets); {
+//
+//
+//                }
                 //for each bullet in bullets, update.
                 //update each obstacle
 
@@ -76,7 +82,9 @@ public class Main extends JPanel {
 
 
                 repaint();
-                zomb.update();
+                for(Zombie z: deadpeople){
+                    z.update();
+                }
             }
         });
         timer.start();
@@ -106,7 +114,9 @@ public class Main extends JPanel {
         Graphics2D g2 = (Graphics2D) g;
 
         batman.draw(g2);
-        zomb.draw(g2);
+        for(Zombie z: deadpeople){
+            z.draw(g2);
+        }
 
 
         //draw all the things.
