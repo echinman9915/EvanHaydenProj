@@ -16,7 +16,7 @@ public class Main extends JPanel {
     private ArrayList<Sprite> obstacles;
     private ArrayList<Sprite> bullets;
     private ArrayList<Zombie> deadpeople;
-    private Zombie zomb;
+    private boolean w,a,s,d;
 
 
     public Main() {
@@ -27,13 +27,12 @@ public class Main extends JPanel {
         batman = new Batman();
         deadpeople = new ArrayList<Zombie>();
         bullets = new ArrayList<Sprite>();
-        for (int i = 0; i < 10 ; i++) {
-            deadpeople.add(new Zombie(100*i, 100*1, batman));
+        for (int i = 0; i < 10; i++) {
+            deadpeople.add(new Zombie(100 * i, 100 * 1, batman));
         }
-        zomb = new Zombie(200, 200, batman);
 
 
-        //init arraylist
+        //init arraylist ;)
         //add obstacles - cars and stuff
 
 
@@ -42,30 +41,30 @@ public class Main extends JPanel {
             public void actionPerformed(ActionEvent actionEvent) {
 
                 if (keys[KeyEvent.VK_W]) {
+                    w=true;
                     batman.setDir(Sprite.NORTH);
-                    batman.update();
-                    keys[KeyEvent.VK_W] = false; //probably.
+
                 }
                 if (keys[KeyEvent.VK_A]) {
                     batman.setDir(Sprite.WEST);
-                    batman.update();
-                    keys[KeyEvent.VK_A] = false; //probably.
+                    a=true;
+
+                     //probably.
                 }
                 if (keys[KeyEvent.VK_D]) {
                     batman.setDir(Sprite.EAST);
-                    batman.update();
-                    keys[KeyEvent.VK_D] = false; //probably.
+                    d=true;
+                     //probably.
                 }
                 if (keys[KeyEvent.VK_S]) {
                     batman.setDir(Sprite.SOUTH);
-                    batman.update();
-                    keys[KeyEvent.VK_S] = false; //probably.
+                    s=true;
+                     //probably.
                 }
                 if (keys[KeyEvent.VK_SPACE]) {
 
                     Bullet b = new Bullet(batman.getLoc().x, batman.getLoc().y, batman.getDir());
                     bullets.add(b);
-
                     keys[KeyEvent.VK_S] = false; //probably.
                 }
 
@@ -76,26 +75,40 @@ public class Main extends JPanel {
                         if (b.intersects(zomb) && lives != 0) {
                             lives--;
                         }
-
                         if (lives == 0) {
                             deadpeople.remove(i);
                         }
+
                     }
 
-                    //for each bullet in bullets, update.
-                    //update each obstacle
+                }
+                //for each bullet in bullets, update.
+                //update each obstacle
 
-                    //check for collisions
+                //check for collisions
 //                if bullet hits zombie add 1 damamage out of 3
 //                if damage equals 3 zomble dies
 //                if bullet hits barrel, barrel blows up and gives 3x damage in a circle with a radius with 10.
 
 
-                    repaint();
-                    zomb.update();
+                repaint();
+                for (Zombie z : deadpeople) {
+                    z.update();
+                }
+                if(w){
+                    batman.setLoc(new Point(batman.getLoc().x,batman.getLoc().y-5));
+                }
+                if(s){
+                    batman.setLoc(new Point(batman.getLoc().x,batman.getLoc().y+5));
+                }
+                if(a){
+                    batman.setLoc(new Point(batman.getLoc().x-5,batman.getLoc().y));
+                }
+                if(d){
+                    batman.setLoc(new Point(batman.getLoc().x+5,batman.getLoc().y));
                 }
             }
-            });
+        });
         timer.start();
 
         addKeyListener(new KeyListener() {
@@ -112,6 +125,19 @@ public class Main extends JPanel {
             @Override
             public void keyReleased(KeyEvent keyEvent) {
                 keys[keyEvent.getKeyCode()] = false;
+                int code = keyEvent.getKeyChar();
+                if(code=='w'){
+                    w=false;
+                }
+                if(code=='a'){
+                    a=false;
+                }
+                if(code=='s'){
+                    s=false;
+                }
+                if(code=='d'){
+                    d=false;
+                }
             }
         });
 
@@ -123,7 +149,12 @@ public class Main extends JPanel {
         Graphics2D g2 = (Graphics2D) g;
 
         batman.draw(g2);
-        zomb.draw(g2);
+        for (Zombie z : deadpeople) {
+            z.draw(g2);
+        }
+        for (Sprite s:bullets) {
+            s.draw(g2);
+        }
 
 
         //draw all the things.

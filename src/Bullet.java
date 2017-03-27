@@ -8,7 +8,7 @@ public class Bullet extends Sprite{
     public Bullet(int x, int y, int dir){
         super(x,y,dir);
         setSpeed(10);
-        setPic("bullet.png", WEST);
+        setPic("red.png", WEST);
 
     }
 
