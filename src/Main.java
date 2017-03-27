@@ -9,12 +9,13 @@ public class Main extends JPanel {
     public static final int FRAMEWIDTH = 1400, FRAMEHEIGHT = 800;
     private Timer timer;
     private boolean[] keys;
-    private Sprite bullets;
 
 
     //instance fields for sprites which are located on screen.
     private Sprite batman = new Batman();
     private ArrayList<Sprite> obstacles;
+    private ArrayList<Sprite> bullets;
+    private ArrayList<Zombie> deadpeople;
     private Zombie zomb;
 
 
@@ -24,6 +25,11 @@ public class Main extends JPanel {
         //initialize the instance fields.
 
         batman = new Batman();
+        deadpeople = new ArrayList<Zombie>();
+        bullets = new ArrayList<Sprite>();
+        for (int i = 0; i < 10 ; i++) {
+            deadpeople.add(new Zombie(100*i, 100*1, batman));
+        }
         zomb = new Zombie(200, 200, batman);
 
 
@@ -58,27 +64,38 @@ public class Main extends JPanel {
                 if (keys[KeyEvent.VK_SPACE]) {
 
                     Bullet b = new Bullet(batman.getLoc().x, batman.getLoc().y, batman.getDir());
-                   // bullets.add(b);
+                    bullets.add(b);
+
                     keys[KeyEvent.VK_S] = false; //probably.
                 }
 
-                for (b:bullets); {
+                int lives = 3;
+                for (Sprite b : bullets) {
+                    for (int i = 0; i < deadpeople.size(); i++) {
+                        Zombie zomb = deadpeople.get(i);
+                        if (b.intersects(zomb) && lives != 0) {
+                            lives--;
+                        }
 
+                        if (lives == 0) {
+                            deadpeople.remove(i);
+                        }
+                    }
 
-                }
-                //for each bullet in bullets, update.
-                //update each obstacle
+                    //for each bullet in bullets, update.
+                    //update each obstacle
 
-                //check for collisions
+                    //check for collisions
 //                if bullet hits zombie add 1 damamage out of 3
 //                if damage equals 3 zomble dies
 //                if bullet hits barrel, barrel blows up and gives 3x damage in a circle with a radius with 10.
 
 
-                repaint();
-                zomb.update();
+                    repaint();
+                    zomb.update();
+                }
             }
-        });
+            });
         timer.start();
 
         addKeyListener(new KeyListener() {

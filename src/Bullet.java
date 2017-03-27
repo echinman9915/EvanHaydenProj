@@ -14,9 +14,7 @@ public class Bullet extends Sprite{
 
 
     public void update(){
-
-        if (bullets.intersects())
-
+        super.update();
 
     }
 
