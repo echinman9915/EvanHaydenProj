@@ -17,6 +17,7 @@ public class Main extends JPanel {
     private ArrayList<Sprite> bullets;
     private ArrayList<Zombie> deadpeople;
     private boolean w,a,s,d;
+    private int count = 0;
 
 
     public Main() {
@@ -62,22 +63,31 @@ public class Main extends JPanel {
                      //probably.
                 }
                 if (keys[KeyEvent.VK_SPACE]) {
+                    if(count%5==0){
+                        Bullet b = new Bullet(batman.getCenterPoint().x, batman.getCenterPoint().y, batman.getDir());
+                        bullets.add(b);
+                        b.setSpeed(10);
+                    }
 
-                    Bullet b = new Bullet(batman.getLoc().x, batman.getLoc().y, batman.getDir());
-                    bullets.add(b);
+
                     keys[KeyEvent.VK_S] = false; //probably.
                 }
 
-                int lives = 3;
+
                 for (Sprite b : bullets) {
+                    b.update();
                     for (int i = 0; i < deadpeople.size(); i++) {
                         Zombie zomb = deadpeople.get(i);
-                        if (b.intersects(zomb) && lives != 0) {
-                            lives--;
+                        if (b instanceof Bullet){
+                            if (b.intersects(zomb)){// && lives != 0) {
+
+                                deadpeople.remove(i);
+
+                            }
                         }
-                        if (lives == 0) {
-                            deadpeople.remove(i);
-                        }
+//                        else if (lives == 0) {
+//                            deadpeople.remove(i);
+//                        }
 
                     }
 
@@ -90,7 +100,7 @@ public class Main extends JPanel {
 //                if damage equals 3 zomble dies
 //                if bullet hits barrel, barrel blows up and gives 3x damage in a circle with a radius with 10.
 
-
+                count=count+1;
                 repaint();
                 for (Zombie z : deadpeople) {
                     z.update();
@@ -108,6 +118,7 @@ public class Main extends JPanel {
                     batman.setLoc(new Point(batman.getLoc().x+5,batman.getLoc().y));
                 }
             }
+
         });
         timer.start();
 

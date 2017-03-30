@@ -8,10 +8,12 @@ import java.awt.Point;
 public class Zombie extends Sprite {
 
     private Sprite target;
+    private int lives;
 
     public Zombie(int x, int y, Sprite sprite) {
         super(x, y, EAST);
         setPic(" BRAINS.png", EAST);
+        lives = 3;
 
 //        ArrayList<Sprite> sprites = sprite.getAllSprites();
 //        target = sprites.get((int) (Math.random() * sprites.size()));

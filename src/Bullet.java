@@ -3,7 +3,7 @@
  */
 public class Bullet extends Sprite{
 
-    private Sprite bullets;
+    private Sprite bullet;
 
     public Bullet(int x, int y, int dir){
         super(x,y,dir);
@@ -14,6 +14,7 @@ public class Bullet extends Sprite{
 
 
     public void update(){
+
         super.update();
 
     }
