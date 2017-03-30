@@ -22,6 +22,7 @@ public class Main extends JPanel {
 
     public Main() {
 
+        System.out.println("it");
         keys = new boolean[512]; //should be enough to hold any key code.
         //initialize the instance fields.
 
