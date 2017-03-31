@@ -3,10 +3,12 @@
  */
 public class Batman extends Sprite{
 
+    private int lifes;
     public Batman(){
         super(400,400,EAST);
         setPic("batman ak.png", EAST);
         setSpeed(this.getBoundingRectangle().height);
+        lifes = 10;
 
 
     }
@@ -33,6 +35,15 @@ public class Batman extends Sprite{
 //        }
 
     }
+
+    public void getHit(){
+        lifes--;
+    }
+    public int getLifes(){
+        return lifes;
+}
+
+
 }
 
 

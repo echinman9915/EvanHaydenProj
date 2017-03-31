@@ -80,22 +80,31 @@ public class Main extends JPanel {
 
                 for (Sprite b : bullets) {
                     b.update();
+                }
                     for (int i = 0; i < deadpeople.size(); i++) {
-                        Zombie zomb = deadpeople.get(i);
-                        if (b instanceof Bullet){
-                            if (b.intersects(zomb)){// && lives != 0) {
+                        // && lives != 0) {
+                                for (int j = 0; j < bullets.size(); j++) {
+                                    if(deadpeople.get(i).intersects(bullets.get(j))){
+                                        deadpeople.get(i).getHit();
+                                        bullets.remove(j);
+                                    }
+                                    if(deadpeople.get(i).getLives()==0){
+                                        deadpeople.remove(i);
+                                    }
 
-                                deadpeople.remove(i);
+                                }
 
-                            }
-                        }
-//                        else if (lives == 0) {
-//                            deadpeople.remove(i);
-//                        }
+                                //zomb.getHit();
+
+
+
+//                            if (zomb.getLives() == 0) {
+//                                deadpeople.remove(i);
+//                            }
 
                     }
 
-                }
+
                 //for each bullet in bullets, update.
                 //update each obstacle
 
@@ -108,6 +117,9 @@ public class Main extends JPanel {
                 repaint();
                 for (Zombie z : deadpeople) {
                     z.update();
+                    if (z.intersects(batman)){
+                        deadpeople.remove(batman);
+                    }
                 }
                 if(w){
                     batman.setLoc(new Point(batman.getLoc().x,batman.getLoc().y-6));

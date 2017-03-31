@@ -10,6 +10,7 @@ public class Zombie extends Sprite {
     private Sprite target;
     private int lives;
 
+
     public Zombie(int x, int y, Sprite sprite) {
         super(x, y, EAST);
         setPic(" BRAINS.png", EAST);
@@ -32,6 +33,7 @@ public class Zombie extends Sprite {
 
         int d = target.getDirection(this.getLoc(), target.getLoc());
         this.setDir(d);
+
 
         setDir(d);
 
