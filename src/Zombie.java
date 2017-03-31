@@ -47,6 +47,13 @@ public class Zombie extends Sprite {
         this.target = target;
     }
 
+    public void getHit(){
+        lives--;
+    }
+    public int getLives(){
+        return lives;
+    }
+
 }
 
 
