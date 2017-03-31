@@ -8,7 +8,7 @@ public class Bullet extends Sprite{
     public Bullet(int x, int y, int dir){
         super(x,y,dir);
         setSpeed(10);
-        setPic("red.png", WEST);
+        setPic("red2.png", WEST);
 
     }
 
@@ -17,7 +17,7 @@ public class Bullet extends Sprite{
 
         super.update();
 
-    }
+     }
 
 
 }

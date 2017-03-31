@@ -29,8 +29,11 @@ public class Main extends JPanel {
         batman = new Batman();
         deadpeople = new ArrayList<Zombie>();
         bullets = new ArrayList<Sprite>();
-        for (int i = 0; i < 10; i++) {
-            deadpeople.add(new Zombie(100 * i, 100 * 1, batman));
+        for (int i = 0; i < 4; i++) {
+            deadpeople.add(new Zombie(50, 100*(2*i)+20, batman));
+        }
+        for (int i = 0; i < 4; i++) {
+            deadpeople.add(new Zombie(1200, 100*(2*i)+20, batman));
         }
 
 
@@ -67,7 +70,7 @@ public class Main extends JPanel {
                     if(count%5==0){
                         Bullet b = new Bullet(batman.getCenterPoint().x, batman.getCenterPoint().y, batman.getDir());
                         bullets.add(b);
-                        b.setSpeed(10);
+                        b.setSpeed(12);
                     }
 
 
@@ -107,16 +110,16 @@ public class Main extends JPanel {
                     z.update();
                 }
                 if(w){
-                    batman.setLoc(new Point(batman.getLoc().x,batman.getLoc().y-5));
+                    batman.setLoc(new Point(batman.getLoc().x,batman.getLoc().y-6));
                 }
                 if(s){
-                    batman.setLoc(new Point(batman.getLoc().x,batman.getLoc().y+5));
+                    batman.setLoc(new Point(batman.getLoc().x,batman.getLoc().y+6));
                 }
                 if(a){
-                    batman.setLoc(new Point(batman.getLoc().x-5,batman.getLoc().y));
+                    batman.setLoc(new Point(batman.getLoc().x-6,batman.getLoc().y));
                 }
                 if(d){
-                    batman.setLoc(new Point(batman.getLoc().x+5,batman.getLoc().y));
+                    batman.setLoc(new Point(batman.getLoc().x+6,batman.getLoc().y));
                 }
             }
 
