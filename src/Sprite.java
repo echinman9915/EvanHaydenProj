@@ -40,10 +40,12 @@ public class Sprite {
         double locationY = pic.getHeight() / 2;
 //        AffineTransform tx = AffineTransform.getRotateInstance(rotationRequired, locationX, locationY);
 //        AffineTransformOp op = new AffineTransformOp(tx, AffineTransformOp.TYPE_BILINEAR);
-        g2.rotate(rotationRequired, loc.x+locationX, loc.y+locationX);
+        g2.rotate(rotationRequired, loc.x+locationX, loc.y+locationY);
 //        g2.drawImage(op.filter(pic, null), loc.x, loc.y, null);
         g2.drawImage(pic, loc.x, loc.y, null);
-        g2.rotate(-rotationRequired, loc.x+locationX, loc.y+locationX);
+        g2.rotate(-rotationRequired, loc.x+locationX, loc.y+locationY);
+
+        g2.draw(getBoundingRectangle());
     }
 
     /**

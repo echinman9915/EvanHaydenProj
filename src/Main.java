@@ -12,20 +12,23 @@ public class Main extends JPanel {
 
 
     //instance fields for sprites which are located on screen.
-    private Sprite batman = new Batman();
+    private Batman batman = new Batman();
+    private int gamelevel = 0;
     private ArrayList<Sprite> obstacles;
     private ArrayList<Sprite> bullets;
     private ArrayList<Zombie> deadpeople;
-    private boolean w,a,s,d;
+    private boolean w, a, s, d;
     private int count = 0;
     private int zombieSize;
     private int nextlevel;
     private int score;
+    private int countHit;
+    private boolean alive = true;
 
 
     public Main() {
-        nextlevel=2;
-        score=0;
+        nextlevel = 2;
+        score = 0;
 
         System.out.println("it");
         keys = new boolean[512]; //should be enough to hold any key code.
@@ -35,10 +38,10 @@ public class Main extends JPanel {
         deadpeople = new ArrayList<Zombie>();
         bullets = new ArrayList<Sprite>();
         for (int i = 0; i < 4; i++) {
-            deadpeople.add(new Zombie(50, 100*(2*i)+20, batman));
+            deadpeople.add(new Zombie(50, 100 * (2 * i) + 20, batman));
         }
         for (int i = 0; i < 4; i++) {
-            deadpeople.add(new Zombie(1200, 100*(2*i)+20, batman));
+            deadpeople.add(new Zombie(1200, 100 * (2 * i) + 20, batman));
         }
 
 
@@ -49,76 +52,80 @@ public class Main extends JPanel {
         timer = new Timer(40, new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent actionEvent) {
-
+                if (batman.getLifes() == 0) {
+                    alive = false;
+                    gamelevel = 1;
+                }
                 if (keys[KeyEvent.VK_W]) {
-                    w=true;
+                    w = true;
                     batman.setDir(Sprite.NORTH);
 
                 }
                 if (keys[KeyEvent.VK_A]) {
                     batman.setDir(Sprite.WEST);
-                    a=true;
+                    a = true;
 
-                     //probably.
+                    //probably.
                 }
                 if (keys[KeyEvent.VK_D]) {
                     batman.setDir(Sprite.EAST);
-                    d=true;
-                     //probably.
+                    d = true;
+                    //probably.
                 }
                 if (keys[KeyEvent.VK_S]) {
                     batman.setDir(Sprite.SOUTH);
-                    s=true;
-                     //probably.
+                    s = true;
+                    //probably.
                 }
                 if (keys[KeyEvent.VK_SPACE]) {
-                    if(count%5==0){
+//                    if(count%2==0)
+                    {
                         Bullet b = new Bullet(batman.getCenterPoint().x, batman.getCenterPoint().y, batman.getDir());
                         bullets.add(b);
                         b.setSpeed(15);
                     }
 
 
-                    keys[KeyEvent.VK_S] = false; //probably.
+                    keys[KeyEvent.VK_SPACE] = false; //probably.
                 }
 
 
                 for (Sprite b : bullets) {
                     b.update();
                 }
-                zombieSize=deadpeople.size();
-                    for (int i = 0; i < deadpeople.size(); i++) {
-                        // && lives != 0) {
+                zombieSize = deadpeople.size();
+                for (int i = 0; i < deadpeople.size(); i++) {
+                    // && lives != 0) {
 
-                                for (int j = 0; j < bullets.size(); j++) {
-                                    if(i<deadpeople.size()) {
-
-
-                                        if (deadpeople.get(i).intersects(bullets.get(j))) {
-                                            deadpeople.get(i).getHit();
-                                            bullets.remove(j);
-                                        }
-                                        if (deadpeople.get(i).getLives() == 0) {
-                                            deadpeople.remove(i);
-                                            score++;
-                                        }
-                                    }
-
-                                }
+                    for (int j = 0; j < bullets.size(); j++) {
+                        if (i < deadpeople.size()) {
 
 
-                                //zomb.getHit();
-
-
-
-//                            if (zomb.getLives() == 0) {
-//                                deadpeople.remove(i);
-//                            }
+                            if (deadpeople.get(i).intersects(bullets.get(j))) {
+                                deadpeople.get(i).getHit();
+                                bullets.remove(j);
+                            }
+                            if (deadpeople.get(i).getLives() == 0) {
+                                deadpeople.remove(i);
+                                score++;
+                            }
+                        }
 
                     }
 
 
-                    if (deadpeople.size()==0){
+//                                zomb.getHit();
+//
+//
+//
+//                            if (zomb.getLives() == 0) {
+//                                deadpeople.remove(i);
+//                            }
+
+                }
+                batman.update();
+
+                if (deadpeople.size() == 0) {
 //                        deadpeople.add(new Zombie(100,100,batman));
 //                        deadpeople.add(new Zombie(300,100,batman));
 //                        deadpeople.add(new Zombie(100,300,batman));
@@ -126,18 +133,18 @@ public class Main extends JPanel {
 //                        deadpeople.add(new Zombie(500,100,batman));
 //                        deadpeople.add(new Zombie(100,500,batman));
 //                        deadpeople.add(new Zombie(0,0,batman));
-                        for (int i = 0; i < nextlevel; i++) {
-                            int y= 800/nextlevel;
+                    for (int i = 0; i < nextlevel; i++) {
+                        int y = 800 / nextlevel;
 
-                            if(i%2==0)
-                                deadpeople.add(new Zombie(1250,y*i,batman));
-                            else
-                                deadpeople.add(new Zombie(50,y*i,batman));
-                        }
-                        nextlevel++;
-
-
+                        if (i % 2 == 0)
+                            deadpeople.add(new Zombie(1250, y * i, batman));
+                        else
+                            deadpeople.add(new Zombie(50, y * i, batman));
                     }
+                    nextlevel++;
+
+
+                }
 
 
                 //for each bullet in bullets, update.
@@ -148,25 +155,26 @@ public class Main extends JPanel {
 //                if damage equals 3 zomble dies
 //                if bullet hits barrel, barrel blows up and gives 3x damage in a circle with a radius with 10.
 
-                count=count+1;
+                count = count + 1;
                 repaint();
                 for (Zombie z : deadpeople) {
                     z.update();
-                    if (z.intersects(batman)){
-                        deadpeople.remove(batman);
+                    if (z.intersects(batman) && !batman.getVince()) {
+                        batman.getHit();
+                        batman.setVince(true);
                     }
                 }
-                if(w){
-                    batman.setLoc(new Point(batman.getLoc().x,batman.getLoc().y-8));
+                if (w) {
+                    batman.setLoc(new Point(batman.getLoc().x, batman.getLoc().y - 8));
                 }
-                if(s){
-                    batman.setLoc(new Point(batman.getLoc().x,batman.getLoc().y+8));
+                if (s) {
+                    batman.setLoc(new Point(batman.getLoc().x, batman.getLoc().y + 8));
                 }
-                if(a){
-                    batman.setLoc(new Point(batman.getLoc().x-8,batman.getLoc().y));
+                if (a) {
+                    batman.setLoc(new Point(batman.getLoc().x - 8, batman.getLoc().y));
                 }
-                if(d){
-                    batman.setLoc(new Point(batman.getLoc().x+8,batman.getLoc().y));
+                if (d) {
+                    batman.setLoc(new Point(batman.getLoc().x + 8, batman.getLoc().y));
                 }
             }
 
@@ -188,17 +196,17 @@ public class Main extends JPanel {
             public void keyReleased(KeyEvent keyEvent) {
                 keys[keyEvent.getKeyCode()] = false;
                 int code = keyEvent.getKeyChar();
-                if(code=='w'){
-                    w=false;
+                if (code == 'w') {
+                    w = false;
                 }
-                if(code=='a'){
-                    a=false;
+                if (code == 'a') {
+                    a = false;
                 }
-                if(code=='s'){
-                    s=false;
+                if (code == 's') {
+                    s = false;
                 }
-                if(code=='d'){
-                    d=false;
+                if (code == 'd') {
+                    d = false;
                 }
             }
         });
@@ -209,19 +217,31 @@ public class Main extends JPanel {
     public void paintComponent(Graphics g) {
         super.paintComponent(g);
         Graphics2D g2 = (Graphics2D) g;
+        if (gamelevel == 0) {
+            if (alive) {
+                batman.draw(g2);
+            }
 
-        batman.draw(g2);
-        for (Zombie z : deadpeople) {
-            z.draw(g2);
+            for (Zombie z : deadpeople) {
+                z.draw(g2);
+            }
+            for (Sprite s : bullets) {
+                s.draw(g2);
+            }
+
+            Font myFont = new Font("Courier New", 1, 50);
+            g2.setFont(myFont);
+            g2.drawString("score: " + score, getWidth() / 2 + 400, 50);
+            g2.drawString("Lives: " + batman.getLifes(), 100, 100);
         }
-        for (Sprite s:bullets) {
-            s.draw(g2);
+        if (gamelevel == 1) {
+            g2.setColor(Color.BLACK);
+            g2.fillRect(0, 0, getWidth(), getHeight());
+            g2.setColor(Color.WHITE);
+            Font myFont = new Font("Courier New", 1, 50);
+            g2.drawString("Final Score: " + score, getWidth()/2, getHeight()/2);
+
         }
-        Font myFont = new Font("Courier New", 1, 50);
-        g2.setFont(myFont);
-        g2.drawString("score: " + score, getWidth()/2+400, 50);
-
-
 
 
         //draw all the things.
