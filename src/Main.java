@@ -239,7 +239,9 @@ public class Main extends JPanel {
             g2.fillRect(0, 0, getWidth(), getHeight());
             g2.setColor(Color.WHITE);
             Font myFont = new Font("Courier New", 1, 50);
-            g2.drawString("Final Score: " + score, getWidth()/2, getHeight()/2);
+            g2.setFont(myFont);
+            g2.drawString("Good Game",getWidth()/2-300 ,getHeight()/2-100);
+            g2.drawString("Final Score: " + score, getWidth()/2-300, getHeight()/2);
 
         }
 
