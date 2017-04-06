@@ -4,11 +4,14 @@
 public class Bullet extends Sprite{
 
     private Sprite bullet;
+    private int life;
 
     public Bullet(int x, int y, int dir){
         super(x,y,dir);
         setSpeed(10);
         setPic("red2.png", WEST);
+        life=1;
+
 
     }
 
@@ -17,6 +20,14 @@ public class Bullet extends Sprite{
 
         super.update();
 
+     }
+
+     public void getHit(){
+         life--;
+     }
+
+     public int getLife(){
+         return life;
      }
 
 

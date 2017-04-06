@@ -23,7 +23,7 @@ public class Zombie extends Sprite {
 //        }
 
         target = sprite;
-        setSpeed(2);
+        setSpeed(4);
 
         setLoc(new Point(x, y));
     }

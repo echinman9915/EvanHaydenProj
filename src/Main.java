@@ -18,9 +18,14 @@ public class Main extends JPanel {
     private ArrayList<Zombie> deadpeople;
     private boolean w,a,s,d;
     private int count = 0;
+    private int zombieSize;
+    private int nextlevel;
+    private int score;
 
 
     public Main() {
+        nextlevel=2;
+        score=0;
 
         System.out.println("it");
         keys = new boolean[512]; //should be enough to hold any key code.
@@ -70,7 +75,7 @@ public class Main extends JPanel {
                     if(count%5==0){
                         Bullet b = new Bullet(batman.getCenterPoint().x, batman.getCenterPoint().y, batman.getDir());
                         bullets.add(b);
-                        b.setSpeed(12);
+                        b.setSpeed(15);
                     }
 
 
@@ -81,18 +86,26 @@ public class Main extends JPanel {
                 for (Sprite b : bullets) {
                     b.update();
                 }
+                zombieSize=deadpeople.size();
                     for (int i = 0; i < deadpeople.size(); i++) {
                         // && lives != 0) {
+
                                 for (int j = 0; j < bullets.size(); j++) {
-                                    if(deadpeople.get(i).intersects(bullets.get(j))){
-                                        deadpeople.get(i).getHit();
-                                        bullets.remove(j);
-                                    }
-                                    if(deadpeople.get(i).getLives()==0){
-                                        deadpeople.remove(i);
+                                    if(i<deadpeople.size()) {
+
+
+                                        if (deadpeople.get(i).intersects(bullets.get(j))) {
+                                            deadpeople.get(i).getHit();
+                                            bullets.remove(j);
+                                        }
+                                        if (deadpeople.get(i).getLives() == 0) {
+                                            deadpeople.remove(i);
+                                            score++;
+                                        }
                                     }
 
                                 }
+
 
                                 //zomb.getHit();
 
@@ -101,6 +114,28 @@ public class Main extends JPanel {
 //                            if (zomb.getLives() == 0) {
 //                                deadpeople.remove(i);
 //                            }
+
+                    }
+
+
+                    if (deadpeople.size()==0){
+//                        deadpeople.add(new Zombie(100,100,batman));
+//                        deadpeople.add(new Zombie(300,100,batman));
+//                        deadpeople.add(new Zombie(100,300,batman));
+//                        deadpeople.add(new Zombie(100,100,batman));
+//                        deadpeople.add(new Zombie(500,100,batman));
+//                        deadpeople.add(new Zombie(100,500,batman));
+//                        deadpeople.add(new Zombie(0,0,batman));
+                        for (int i = 0; i < nextlevel; i++) {
+                            int y= 800/nextlevel;
+
+                            if(i%2==0)
+                                deadpeople.add(new Zombie(1250,y*i,batman));
+                            else
+                                deadpeople.add(new Zombie(50,y*i,batman));
+                        }
+                        nextlevel++;
+
 
                     }
 
@@ -122,16 +157,16 @@ public class Main extends JPanel {
                     }
                 }
                 if(w){
-                    batman.setLoc(new Point(batman.getLoc().x,batman.getLoc().y-6));
+                    batman.setLoc(new Point(batman.getLoc().x,batman.getLoc().y-8));
                 }
                 if(s){
-                    batman.setLoc(new Point(batman.getLoc().x,batman.getLoc().y+6));
+                    batman.setLoc(new Point(batman.getLoc().x,batman.getLoc().y+8));
                 }
                 if(a){
-                    batman.setLoc(new Point(batman.getLoc().x-6,batman.getLoc().y));
+                    batman.setLoc(new Point(batman.getLoc().x-8,batman.getLoc().y));
                 }
                 if(d){
-                    batman.setLoc(new Point(batman.getLoc().x+6,batman.getLoc().y));
+                    batman.setLoc(new Point(batman.getLoc().x+8,batman.getLoc().y));
                 }
             }
 
@@ -182,6 +217,11 @@ public class Main extends JPanel {
         for (Sprite s:bullets) {
             s.draw(g2);
         }
+        Font myFont = new Font("Courier New", 1, 50);
+        g2.setFont(myFont);
+        g2.drawString("score: " + score, getWidth()/2+400, 50);
+
+
 
 
         //draw all the things.
